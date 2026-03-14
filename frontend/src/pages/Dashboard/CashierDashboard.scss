@@ -1,0 +1,84 @@
+@import "../../assets/styles/global.scss";
+
+.dashboard-container {
+  padding: 40px;
+  animation: fadeIn 0.4s ease;
+}
+
+.dashboard-welcome {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 30px;
+  color: $pink-main;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.dashboard-top-row {
+  display: flex;
+  gap: 30px;
+  align-items: stretch; 
+  flex-wrap: wrap;
+
+  @media (max-width: 850px) {
+    flex-direction: column;
+  }
+}
+
+.dashboard-card, .transaction-card {
+  flex: 1; 
+  min-height: 300px; 
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+}
+
+.transaction-card {
+  background-color: #fff0f7;
+  border-radius: 16px;
+  padding: 2rem;
+  flex: 1 1 300px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+  text-align: center;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+  }
+
+  h2 {
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    color: $pink-main;
+  }
+
+  p {
+    color: $pink-main;
+    opacity: 0.8;
+  }
+
+  .card-icon {
+    background: linear-gradient(135deg, #f06292, #d63384);
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2.2rem;
+    margin: 0 auto 1rem auto;
+    transition: transform 0.2s ease;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+}

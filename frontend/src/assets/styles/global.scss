@@ -1,0 +1,51 @@
+@import "./_variables"; 
+
+body {
+  // background: #ffe6f2;
+  color: $pink-main;
+  font-family: 'Poppins', sans-serif;
+}
+
+.pink-btn {
+  background-color: $pink-light !important;
+  color: white !important;
+
+  &:hover {
+    background-color: darken($pink-light, 10%) !important;
+  }
+}
+
+.secondary-pink-btn {
+  color: $pink-light !important;
+  border: 1px solid $pink-light !important;
+  &:hover {
+    background-color: rgba($pink-light, 0.07) !important;
+  }
+}
+
+// register
+.pink-link {
+  color: $pink-main;
+  cursor: "pointer";
+}
+
+.pink-link:hover {
+  text-shadow: 0px 0px 6px $pink-light;
+}
+
+*,
+.MuiTypography-root,
+.MuiButton-root,
+.MuiInputBase-input,
+.MuiOutlinedInput-root,
+.MuiFormLabel-root {
+  font-family: $font-primary !important;
+}
+
+.MuiOutlinedInput-root.Mui-focused fieldset {
+  border-color: #f06292 !important;
+}
+
+.MuiInputLabel-root.Mui-focused {
+  color: #d63384 !important;
+}

@@ -1,0 +1,123 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum RoleType {
+  regular
+  cashier
+  manager
+  superuser
+}
+
+enum TransactionType {
+  purchase
+  redemption
+  adjustment
+  event
+  transfer
+}
+
+enum PromotionType {
+  automatic
+  onetime
+}
+
+model User {
+  id          Int             @id @default(autoincrement())
+  utorid      String          @unique
+  password    String
+  name        String?
+  email       String          @unique
+  verified    Boolean         @default(false)
+  role        RoleType        @default(regular)
+  points      Int             @default(0)
+  birthday    DateTime?
+  createdAt   DateTime        @default(now())
+  lastLogin   DateTime?
+  avatarUrl   String?
+  suspicious  Boolean         @default(false)
+  activated   Boolean         @default(false)
+  promotions  Promotion[]     
+  attended    Event[]         @relation("EventGuests")
+  organized   Event[]         @relation("EventOrganizers")
+  approved    Transaction[]   @relation("TransactionApprover")
+  created     Transaction[]   @relation("TransactionAuthor")
+  sent        Transaction[]   @relation("TransactionSender")
+  received    Transaction[]   @relation("TransactionReceiver")
+  tokens      ResetToken[]
+  qrToken     String          @unique @default(uuid())
+}
+
+model Transaction {
+  id            Int         @id @default(autoincrement())
+  utorid        String
+  type          TransactionType 
+  date          DateTime    @default(now())
+  spent         Float       @default(0)
+  earned        Int         @default(0)
+  redeemed      Int         @default(0)
+  remark        String?
+  createdBy     String
+  amount        Float       @default(0)
+  relatedId     Int?
+  suspicious    Boolean     @default(false)
+  sender        String?
+  recepient     String?
+  sent          Int?
+  processedBy   String?
+  awarded       Int?
+  promotionIds  Promotion[]
+  from          User?       @relation("TransactionSender", fields: [sender], references:[utorid])
+  to            User?       @relation("TransactionReceiver", fields: [recepient], references:[utorid])
+  author        User        @relation("TransactionAuthor", fields: [createdBy], references:[utorid])
+  approver      User?       @relation("TransactionApprover", fields: [processedBy], references: [utorid])
+}
+
+model ResetToken {
+  id            Int       @id @default(autoincrement())
+  token         String    @unique
+  utorid        String    @unique
+  expiresAt     DateTime
+  createdAt     DateTime  @default(now())
+  usedAt        DateTime?
+  user          User      @relation(fields: [utorid], references: [utorid])
+  ipAddress     String?
+}
+
+model Promotion {
+  id            Int             @id @default(autoincrement())
+  name          String
+  minSpending   Float           @default(0)
+  rate          Float           @default(0)
+  points        Int             @default(0)
+  description   String
+  type          PromotionType
+  startTime     DateTime        @default(now())
+  endTime       DateTime
+  HeldBy        User[]
+  usedOn        Transaction[]          
+
+}
+
+model Event {
+  id                Int         @id @default(autoincrement())
+  startTime         DateTime
+  endTime           DateTime    
+  location          String
+  description       String      
+  capacity          Int?
+  points            Int         @default(0)
+  name              String
+  pointsRemain      Int
+  pointsAwarded     Int         @default(0)
+  published         Boolean     @default(false)
+  numGuests         Int         @default(0)
+  guests            User[]      @relation("EventGuests")
+  organizers        User[]      @relation("EventOrganizers")
+}

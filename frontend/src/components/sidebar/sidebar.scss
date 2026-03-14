@@ -1,0 +1,82 @@
+@import "../../assets/styles/global.scss";
+
+.sidebar-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.25);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  z-index: 95;
+}
+
+.sidebar-backdrop.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.sidebar-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 260px;
+  //height: 100vh;
+  background: $pink-paper;
+
+  padding: 75px 0.5rem 1rem 0.5rem;
+  font-family: $font-primary;
+
+  box-shadow: 3px 0 12px rgba(214, 51, 132, 0.2);
+
+  transform: translateX(-100%);
+  transition: transform 0.32s cubic-bezier(0.25, 1, 0.5, 1);
+  z-index: 100;
+
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto; 
+  overflow-x: hidden;
+}
+
+.sidebar-subtitle {
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 0px; // controls spacing between subtitle and buttons
+  margin-top: 0px;
+}
+
+.sidebar-container.open {
+  transform: translateX(0);
+}
+
+.sidebar-title {
+  margin-top: 60px;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: $pink-main;
+  margin-bottom: 12px;
+}
+
+.MuiListItemButton-root {
+  border-radius: 10px;
+  margin-bottom: 6px;
+  //padding: 10px 14px;
+
+  color: $text-pink !important;
+  font-weight: 500;
+
+  transition: background 0.15s ease;
+
+  &:hover {
+    background: $pink-light !important;
+    color: white !important;
+  }
+}
+
+.MuiDivider-root {
+  border-color: $pink-border;
+}
